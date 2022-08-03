@@ -1,7 +1,10 @@
 package com.project.hm.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -16,7 +19,12 @@ import lombok.NoArgsConstructor;
 public class RoomDetails {
 @Id
 	private int roomId;
-	private int roomNumber;
+
 	private String photos;
 	private String description;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="room_fk")
+	private Rooms rooms;
+	
 }

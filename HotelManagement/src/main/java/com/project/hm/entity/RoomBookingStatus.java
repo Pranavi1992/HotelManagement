@@ -2,8 +2,12 @@ package com.project.hm.entity;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -17,9 +21,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RoomBookingStatus {
-	@Id
+	@Id 
   private int roomId;
 	private boolean roomStatus;
 	private LocalDate checkIn;
 	private LocalDate checkOut;
+	
+	@ManyToOne()
+	@JoinColumn(name="room_fk")
+	private Rooms rooms;
+
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="user_id_fk")
+	private UserRegistration userRegistration;
+	
 }
