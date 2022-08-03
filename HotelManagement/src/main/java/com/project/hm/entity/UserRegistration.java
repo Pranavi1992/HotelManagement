@@ -38,15 +38,15 @@ public class UserRegistration{
 	private String lastName;
     @NotBlank(message="This field should not be blank")
 	private String userName;
-    @Pattern(regexp="^[a-zA-Z0-9]{8}",message="length must be 8")  
+    @Pattern(regexp="^[a-zA-Z0-9]{9}",message="length must be 8")  
     private String password;
 	@Email
 	private String email;
 	@Min(value=18, message="must be equal or greater than 18")  
 	private int age;
-	@Pattern(regexp = "[89][0-9]{10}", message = "Invalid mobile number entered")
+	//@Pattern(regexp = "[89][0-9]{10}", message = "Invalid mobile number entered")
    	private String phoneNo;
-	
+    private String role;
 	
 
 }

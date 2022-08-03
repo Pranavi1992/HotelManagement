@@ -1,33 +1,68 @@
 package com.project.hm.Security;
 
-import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Collection;
+import java.util.Collections;
+
+
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 
  
 import com.project.hm.entity.UserRegistration;
-import com.project.hm.repository.UserRepository;
 
-public class Userdetails implements UserDetailsService{
-	@Autowired
-	UserRepository userRepository;
+
+public class Userdetails implements UserDetails{
+	
+	private UserRegistration userRegistration;
+
+	public Userdetails(UserRegistration user) {
+		super();
+		this.userRegistration=user;
+	}
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		
-		UserRegistration reg=       userRepository.findByUserName(username);
-		List<Authorities>authority=reg.getAuthorities();
-		System.out.println(authority);
-		if(reg==null)
-		{
-			throw new RuntimeException("exception raised in my userdetails");
-		}
-		
-		return new UserDetailImple(reg);
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return Collections.singleton(new SimpleGrantedAuthority(userRegistration.getRole()));
+	}
 
+	@Override
+	public String getPassword() {
+		
+		return userRegistration.getPassword();
+	}
+
+	@Override
+	public String getUsername() {
+		
+		return userRegistration.getUserName();
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+	
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+	
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		
+		return true;
 	}
 	
 
