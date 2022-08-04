@@ -8,6 +8,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,21 +17,33 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.hm.entity.LoginRequest;
 import com.project.hm.entity.UserRegistration;
+import com.project.hm.jwt.JwtTokenString;
+import com.project.hm.jwt.JwtUtil;
 import com.project.hm.service.UserService;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @RestController
 public class UserController {
 
-	
+	@Autowired
+	JwtUtil jwtUtil;
+
+
+	@Autowired
+	AuthenticationManager authenticationManager;
+
 	
 	
 	@Autowired
 private UserService userService;
-  @PostMapping("/registration")
-
+  
+	@PostMapping("/registration")
   public ResponseEntity<UserRegistration> saveUser(@Valid @RequestBody UserRegistration userRegistration)
   {
-  return new ResponseEntity(userService.saveUser( userRegistration), HttpStatus.CREATED);
+	  System.out.println("Save User>>>>>>>>>>>>>>>>>>>>>>");
+  return new ResponseEntity(userService.addReg( userRegistration), HttpStatus.CREATED);
 
   }
   @GetMapping("/getAllUsers")
@@ -39,9 +53,22 @@ private UserService userService;
 	
   }
   @PostMapping("/login")
-  public ResponseEntity<LoginRequest>login(@RequestBody LoginRequest loginRequest) throws Exception{
-	 
-	  return new ResponseEntity<>(userService.login(loginRequest), HttpStatus.OK);
+	public JwtTokenString generateToken(@RequestBody LoginRequest authRequest) throws Exception {
+		try {
+			authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(authRequest.getUserName(), authRequest.getPassword()));
+		} catch (Exception ex) {
+			throw new Exception("invalid username/password");
+		}
+		JwtTokenString jwtTokenString = new JwtTokenString();
+		jwtTokenString.setToken(jwtUtil.generateToken(authRequest.getUserName()));
+		return jwtTokenString;
+	}
+  @GetMapping("/hello")
+  public String hello()
+  {
+	  return "Hello";
   }
+
 	
 }

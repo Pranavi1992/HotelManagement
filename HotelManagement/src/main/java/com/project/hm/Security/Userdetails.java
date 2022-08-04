@@ -1,17 +1,16 @@
 package com.project.hm.Security;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-
-
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
- 
+import com.project.hm.entity.Authorities;
 import com.project.hm.entity.UserRegistration;
 
 
@@ -26,7 +25,16 @@ public class Userdetails implements UserDetails{
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return Collections.singleton(new SimpleGrantedAuthority(userRegistration.getRole()));
+List<Authorities> list=    userRegistration.getAuthorities();
+
+List<SimpleGrantedAuthority> simple= new ArrayList<SimpleGrantedAuthority>();
+
+for(Authorities au:list)
+{
+	simple.add(new SimpleGrantedAuthority(au.getRole()));
+}
+return simple;
+
 	}
 
 	@Override

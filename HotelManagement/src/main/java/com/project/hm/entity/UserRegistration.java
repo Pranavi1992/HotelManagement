@@ -4,11 +4,16 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
@@ -30,7 +35,7 @@ public class UserRegistration{
 	
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int userId;
 	@NotBlank(message="This field should not be blank")
 	private String firstName;
@@ -46,7 +51,10 @@ public class UserRegistration{
 	private int age;
 	//@Pattern(regexp = "[89][0-9]{10}", message = "Invalid mobile number entered")
    	private String phoneNo;
-    private String role;
-	
+   	
+
+	@OneToMany(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
+	@JoinTable(name="user_role", joinColumns = @JoinColumn(name="user_Id"), inverseJoinColumns = @JoinColumn(name="role_id"))
+	private List<Authorities> authorities;
 
 }

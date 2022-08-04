@@ -5,20 +5,29 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.project.hm.jwt.JwtFilter;
 
 @Configuration
 @EnableWebSecurity
 public class security extends WebSecurityConfigurerAdapter {
 	  @Autowired
 	    private UserDetailsService userDetailsService;
+	  @Autowired
+		private JwtFilter jwtFilter;
+	  @Autowired
+	  private MyUserDetailsService details;
 
 		/*
 		 * @Bean AuthenticationProvider authenticationProvider() {
@@ -30,20 +39,29 @@ public class security extends WebSecurityConfigurerAdapter {
          {
         	 authenBuilder.userDetailsService(userDetailsService).passwordEncoder(encoder());
          }
+         @Bean
+     	public AuthenticationProvider authenticationProvider() {
+     		DaoAuthenticationProvider dao = new DaoAuthenticationProvider();
+
+     		dao.setUserDetailsService(details);
+     		dao.setPasswordEncoder(new BCryptPasswordEncoder());
+     		return dao;
+     	}
 	    @Override
 	    protected void configure(HttpSecurity http) throws Exception {
 	    	http.csrf().disable();
 	    	http.authorizeRequests()
-	                .antMatchers("/**")
-	                .permitAll()
-					/*
-					 * .antMatchers("/getAllUsers") .hasAuthority("ADMIN")
-					 */
-	                .anyRequest()
-	                .authenticated()
-	               
-	                ;
+	    	.antMatchers("/hello").permitAll()
+	    	.antMatchers("/login").hasAnyRole("ADMIN","USER")
+            .antMatchers("/registration").hasAnyRole("ADMIN", "USER")
+            .antMatchers("/getAllUsers").hasRole("USER")
+            .and().formLogin();
+            http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+
+    		http.cors().disable();;
+	                
 	    }
+	    
 	    @Bean
 	    PasswordEncoder encoder()
 	    {
@@ -51,8 +69,8 @@ public class security extends WebSecurityConfigurerAdapter {
 	    }
 	    
 	   @Bean(name=BeanIds.AUTHENTICATION_MANAGER)
-	   public  AuthenticationManager authManger() throws Exception {
-	    	return super.authenticationManager();
+	   public  AuthenticationManager authenticationManagerBean() throws Exception {
+	    	return super.authenticationManagerBean();
 	    }
 
 }
