@@ -46,7 +46,7 @@ return simple;
 	@Override
 	public String getUsername() {
 		
-		return userRegistration.getUserName();
+		return userRegistration.getUsername();
 	}
 
 	@Override

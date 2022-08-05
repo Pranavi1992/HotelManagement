@@ -35,15 +35,15 @@ public class UserRegistration{
 	
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int userId;
 	@NotBlank(message="This field should not be blank")
 	private String firstName;
     @NotBlank(message="This field should not be blank")
 	private String lastName;
     @NotBlank(message="This field should not be blank")
-	private String userName;
-    @Pattern(regexp="^[a-zA-Z0-9]{9}",message="length must be 8")  
+	private String username;
+    @NotBlank(message = "Password can't be blank")
     private String password;
 	@Email
 	private String email;

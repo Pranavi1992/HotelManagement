@@ -7,23 +7,27 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.project.hm.entity.AdminRegistration;
+
+import com.project.hm.entity.UserRegistration;
 import com.project.hm.service.AdminService;
 
+@RestController
 public class AdminController {
 
 	@Autowired
 	AdminService adminregservice;
 	
-	@PostMapping("/register")
-	public ResponseEntity<String> addAccount(@RequestBody @Valid AdminRegistration registrationdto) {
+	
+	@PostMapping("admin/register")
+	public ResponseEntity<UserRegistration> addAccount(@RequestBody @Valid UserRegistration registrationdto) {
 
-		AdminRegistration reg = adminregservice.addReg(registrationdto);
+		//AdminRegistration reg = adminregservice.addReg(registrationdto);
 
-		return new ResponseEntity<String>("Hii user " +  " Saved Sucessfully", HttpStatus.OK);
+		return new ResponseEntity(adminregservice.addReg( registrationdto), HttpStatus.CREATED);
 
 	}
-	 
+	
 	
 }

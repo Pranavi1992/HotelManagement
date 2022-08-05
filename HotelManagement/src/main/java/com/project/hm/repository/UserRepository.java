@@ -10,9 +10,9 @@ import com.project.hm.entity.UserRegistration;
 @Repository
 public interface UserRepository extends JpaRepository<UserRegistration,Integer> {
 	
-	public UserRegistration findByUserName(String userName);
+	public UserRegistration findByUsername(String userName);
 
-	public Boolean existsByUserName(String userName);
+	public Boolean existsByUsername(String userName);
 
 	//public Boolean existsByEmail(String email);
 	

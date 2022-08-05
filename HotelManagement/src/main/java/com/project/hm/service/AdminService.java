@@ -8,23 +8,23 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.project.hm.customexceptions.RegistrationCustomException;
-import com.project.hm.entity.AdminRegistration;
 import com.project.hm.entity.Authorities;
-import com.project.hm.repository.AdminRepository;
+import com.project.hm.entity.UserRegistration;
+import com.project.hm.repository.UserRepository;
 
 @Service
 public class AdminService {
 	@Autowired
-	AdminRepository registrationRepo;
+	UserRepository registrationRepo;
 	
-	public AdminRegistration addReg(AdminRegistration registrationdto) {
+	public UserRegistration addReg(UserRegistration registrationdto) {
 
 	
 		
 		
 		if (registrationdto == null) {
 			throw new RuntimeException("null found in registration plss check");
-		} else if (registrationRepo.existsByUserName(registrationdto.getUserName())) {
+		} else if (registrationRepo.existsByUsername(registrationdto.getUsername())) {
 			throw new RegistrationCustomException("707", "Username Already Exists please enter unique");
 		} else
 
