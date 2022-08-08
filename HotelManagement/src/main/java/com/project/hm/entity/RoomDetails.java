@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RoomDetails {
 @Id
-	private int roomId;
+	private Long id;
 
 	private String photos;
 	private String description;

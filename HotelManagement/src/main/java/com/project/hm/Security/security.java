@@ -52,7 +52,7 @@ public class security extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
 		http.authorizeRequests().antMatchers("/**").permitAll()
-
+		.antMatchers("/api/room/**").permitAll()
 				.and().exceptionHandling().and().sessionManagement();
 		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 

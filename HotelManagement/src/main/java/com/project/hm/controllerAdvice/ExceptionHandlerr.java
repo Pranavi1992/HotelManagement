@@ -7,6 +7,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.project.hm.customexceptions.BadRequestException;
+import com.project.hm.customexceptions.ResourceNotFoundException;
 import com.project.hm.customexceptions.UserNotValidException;
 
 @RestControllerAdvice
@@ -28,5 +30,18 @@ public class ExceptionHandlerr {
 		
 		return map;
 	}
-
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public Map<String, String>handleException(ResourceNotFoundException exception){
+		HashMap<String, String> map=new HashMap<>();
+		map.put("ErrorMessage", exception.getMessage());
+		
+		return map;
+	}
+	@ExceptionHandler(BadRequestException.class)
+	public Map<String, String>handleException(BadRequestException exception){
+		HashMap<String, String> map=new HashMap<>();
+		map.put("ErrorMessage", exception.getMessage());
+		
+		return map;
+	}
 }

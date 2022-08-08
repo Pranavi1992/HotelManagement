@@ -36,7 +36,7 @@ public class UserRegistration{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int userId;
+	private Long id;
 	@NotBlank(message="This field should not be blank")
 	private String firstName;
     @NotBlank(message="This field should not be blank")
