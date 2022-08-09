@@ -18,3 +18,4 @@ private RoomStatusRepository roomStatusRepository;
 	}
 
 }
+  

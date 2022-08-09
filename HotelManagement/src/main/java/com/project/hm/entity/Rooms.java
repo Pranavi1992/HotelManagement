@@ -24,7 +24,7 @@ import lombok.ToString;
 public class Rooms {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	 @GeneratedValue(generator = "r_seq",strategy = GenerationType.AUTO)
 	private Long id;
 	private int roomNumber;
 	private double roomPrice;
