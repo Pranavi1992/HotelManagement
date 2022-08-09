@@ -10,11 +10,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.project.hm.controller.RoomStatusController;
 import com.project.hm.customexceptions.RegistrationCustomException;
 import com.project.hm.customexceptions.UserNotValidException;
 
 import com.project.hm.entity.Authorities;
 import com.project.hm.entity.LoginRequest;
+import com.project.hm.entity.Rooms;
 import com.project.hm.entity.UserRegistration;
 import com.project.hm.repository.UserRepository;
 
@@ -23,6 +25,8 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	 private RoomStatusController status;
 	
 	/*@Autowired
 	AuthenticationManager authenticationManager;*/
@@ -72,6 +76,15 @@ public UserRegistration addReg(UserRegistration registration) {
 			userRepository.save(registration);
 			return registration;
 		}
+}
+		 
+			
+		
+//public UserRegistration gettoatlCost() {
+//	List<UserRegistration> user= new ArrayList<UserRegistration>();
+//	user.getList<Rooms>.get price*status.get days
+//	
+//}
 
 	}
-}
+

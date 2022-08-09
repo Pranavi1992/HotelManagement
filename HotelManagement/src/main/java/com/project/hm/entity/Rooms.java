@@ -2,6 +2,7 @@ package com.project.hm.entity;
 
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -28,6 +29,8 @@ public class Rooms {
 	private Long id;
 	private int roomNumber;
 	private double roomPrice;
+	//@Column(nullable = false)
+	private boolean roomStatus=false;
 	
 	@Enumerated(value=EnumType.STRING)
 	private Type type;

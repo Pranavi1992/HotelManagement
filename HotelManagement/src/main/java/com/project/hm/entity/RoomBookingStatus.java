@@ -27,7 +27,7 @@ public class RoomBookingStatus {
 	@Id 
 	 @GeneratedValue(generator = "bookin_seq",strategy = GenerationType.AUTO)
   private Long id;
-	private boolean roomStatus;
+	//private boolean roomStatus;
 	//private LocalDate checkIn;
 	//private LocalDate checkOut;
 
@@ -40,6 +40,13 @@ public class RoomBookingStatus {
    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="MM/dd/yyyy")
     @NotNull(message = "Please enter end date")
     private LocalDate endDate;
+    
+    private Double total;
+    
+    private Double gstTax;
+    
+    private Long totalDays;
+    private Double totalPrice;
 
 	@ManyToOne()
 	@JoinColumn(name="room_fk")

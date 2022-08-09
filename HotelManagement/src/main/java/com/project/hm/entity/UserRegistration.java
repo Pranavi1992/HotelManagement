@@ -51,10 +51,13 @@ public class UserRegistration{
 	private int age;
 	//@Pattern(regexp = "[89][0-9]{10}", message = "Invalid mobile number entered")
    	private String phoneNo;
+   //	private Double totalCost; 
    	
 
 	@OneToMany(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
 	@JoinTable(name="user_role", joinColumns = @JoinColumn(name="user_Id"), inverseJoinColumns = @JoinColumn(name="role_id"))
 	private List<Authorities> authorities;
+	
+	//List<Rooms> rooms;
 
 }
