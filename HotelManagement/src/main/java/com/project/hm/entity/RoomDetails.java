@@ -25,7 +25,7 @@ public class RoomDetails {
 
 	private String photos;
 	private String description;
-	
+	 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="room_fk")
 	private Rooms rooms;

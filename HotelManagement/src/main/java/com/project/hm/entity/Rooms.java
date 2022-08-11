@@ -31,6 +31,9 @@ public class Rooms {
 	private double roomPrice;
 	//@Column(nullable = false)
 	private boolean roomStatus=false;
+	private String photos;
+	private String description;
+	 
 	
 	@Enumerated(value=EnumType.STRING)
 	private Type type;

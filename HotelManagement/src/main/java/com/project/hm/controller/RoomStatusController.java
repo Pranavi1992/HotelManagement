@@ -1,6 +1,7 @@
 package com.project.hm.controller;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
@@ -59,14 +60,23 @@ public class RoomStatusController {
 		  
 		
 		   Double roomPrice=room.get().getRoomPrice();
-		   if(booking.getStartDate()!=null && booking.getEndDate()!=null) {
+		   if(booking.getCheckIn()!=null && booking.getCheckOut()!=null) {
 		    	//Optional<Rooms> room=this.roomRepository.findById(roomId);
 		    
 		    	if(room.isPresent())
 		          room.get().setRoomStatus(true);
 		 this.roomRepository.save(room.get());
 		    }
-		    Long days=ChronoUnit.DAYS.between(booking.getStartDate(), booking.getEndDate());
+
+           LocalDate date = LocalDate.now();
+           if(booking.getCheckIn().isAfter(date)&& booking.getCheckOut().isBefore(date) && (booking.getCheckIn()==date || booking.getCheckOut()==date)) {
+               System.out.println("Room Unavailable");
+
+           }
+           else {
+               System.out.println("Room Available");
+           }
+		    Long days=ChronoUnit.DAYS.between(booking.getCheckIn(), booking.getCheckOut());
 		    
 		    
 		    
