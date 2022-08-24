@@ -77,7 +77,13 @@ public UserRegistration addReg(UserRegistration registration) {
 			return registration;
 		}
 }
-		 
+
+public void deleteByUSerId(Long id) {
+	userRepository.deleteById(id);
+	
+}
+
+	 
 			
 		
 //public UserRegistration gettoatlCost() {

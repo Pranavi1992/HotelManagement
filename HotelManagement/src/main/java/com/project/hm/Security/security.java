@@ -19,6 +19,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.project.hm.jwt.JwtFilter;
 
+
+
 @Configuration
 @EnableWebSecurity
 public class security extends WebSecurityConfigurerAdapter {
@@ -48,19 +50,34 @@ public class security extends WebSecurityConfigurerAdapter {
 		return dao;
 	}
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable();
-		http.authorizeRequests().antMatchers("/**").permitAll()
+	
+	  @Override protected void configure(HttpSecurity http) throws Exception {
+	  http.csrf().disable();
+		/*
+		 * http.authorizeRequests().antMatchers("/api/booking/room-booking",
+		 * "/api/booking/a").hasRole("USER")//.access("hasRole('ROLE_USER')").
+		 * .antMatchers("/getAllUsers","/deleteByUserId/{id}","/api/room/createRoom",
+		 * "/api/room/update/{id}","/api/room/delete/{id}","/api/room/deleteAllRooms")
+		 * .hasRole("ADMIN")
+		 * .antMatchers("/api/room/getAllRooms","/api/room/getByRoomId/{id}").hasAnyRole
+		 * ("ADMIN","USER")
+		 * .antMatchers("user/registration","admin/register","/login").permitAll()
+		 * .and().exceptionHandling().and().sessionManagement();
+		 * http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+		 */
+	  http.authorizeRequests().antMatchers("/**").permitAll()
 		.antMatchers("/api/room/**").permitAll()
-				.and().exceptionHandling().and().sessionManagement();
+		.and().exceptionHandling().and().sessionManagement();
 		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+	  
+	  http.cors().disable();
+	  
+	  }
+	
 
-		http.cors().disable();
 
-	}
-
-	@Bean
+	
+    @Bean
 	PasswordEncoder encoder() {
 		return new BCryptPasswordEncoder();
 

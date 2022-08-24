@@ -39,7 +39,7 @@ public class RoomBookingStatus {
   //  @Temporal(TemporalType.DATE)
    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="MM/dd/yyyy")
     @NotNull(message = "Please enter end date")
-    private LocalDate checkOut;
+    private LocalDate checkOut ;
     
     private Double total;
     

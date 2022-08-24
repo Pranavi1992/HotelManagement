@@ -45,7 +45,7 @@ public class RoomController {
 	    }
 
 	    
-	    @PostMapping("")
+	    @PostMapping("/createRoom")
 
 	    @PreAuthorize("hasRole('ADMIN')")
 	    public ResponseEntity<Map<String, Boolean>> createRoom(@Valid @RequestBody Rooms room) {
@@ -54,7 +54,7 @@ public class RoomController {
 	        map.put("success", true);
 	        return new ResponseEntity<>(map, HttpStatus.CREATED);
 	    }
-	    @PutMapping("/{id}")
+	    @PutMapping("/update/{id}")
 	    @PreAuthorize("hasRole('ADMIN')")
 	    public ResponseEntity<Map<String, Boolean>> updateRoom(@PathVariable Long id,
 	                                                            @Valid @RequestBody Rooms room) {
@@ -65,7 +65,7 @@ public class RoomController {
 	        return new ResponseEntity<>(map, HttpStatus.CREATED);
 	    }
 
-	    @DeleteMapping("/{id}")
+	    @DeleteMapping("/delete/{id}")
 	    @PreAuthorize("hasRole('ADMIN')")
 	    public ResponseEntity<Map<String, Boolean>> deleteRoom(@PathVariable Long id) {
 	        roomservice.deleteRoom(id);
@@ -77,12 +77,15 @@ public class RoomController {
 	    @PreAuthorize("hasRole('ADMIN')")
 	    public ResponseEntity<Map<String, Boolean>> deleteAllRooms() {
 	        roomservice.deleteAllRooms();
-	        Map<String, Boolean> map = new HashMap<>();
+	        Map<String, Boolean> map = new HashMap<>(); 
 	        map.put("success", true);
 	        return new ResponseEntity<>(map, HttpStatus.OK);
 	    }
 	    
 	}
+ 	
 	
-	
+
+
+
 
